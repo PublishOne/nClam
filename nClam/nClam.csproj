@@ -5,6 +5,7 @@
     <Company>nClam Team</Company>
     <Version>4.0.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+      <LangVersion>Latest</LangVersion>
   </PropertyGroup>
 
     <PropertyGroup>
