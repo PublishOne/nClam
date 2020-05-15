@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Net;
     using System.Net.Sockets;
     using System.Text;
     using System.Threading;
@@ -56,32 +57,37 @@
 #endif
             string result;
 
-            using (var clam = new TcpClient())
+            using (var clam = new TcpClient(AddressFamily.InterNetwork))
             {
                 try
                 {
-                    await clam.ConnectAsync(Server, Port).ConfigureAwait(false);
-
-                    using (var stream = clam.GetStream())
+                    if (IPAddress.TryParse(Server, out IPAddress address))
                     {
-                        var commandText = String.Format("z{0}\0", command);
-                        var commandBytes = Encoding.UTF8.GetBytes(commandText);
-                        await stream.WriteAsync(commandBytes, 0, commandBytes.Length, cancellationToken).ConfigureAwait(false);
+                        await clam.ConnectAsync(address, Port).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await clam.ConnectAsync(Server, Port).ConfigureAwait(false);
+                    }
 
-                        if (additionalCommand != null)
+                    using var stream = clam.GetStream();
+                    var commandText = String.Format("z{0}\0", command);
+                    var commandBytes = Encoding.UTF8.GetBytes(commandText);
+                    await stream.WriteAsync(commandBytes, 0, commandBytes.Length, cancellationToken).ConfigureAwait(false);
+
+                    if (additionalCommand != null)
+                    {
+                        await additionalCommand(stream, cancellationToken).ConfigureAwait(false);
+                    }
+
+                    using (var reader = new StreamReader(stream))
+                    {
+                        result = await reader.ReadToEndAsync().ConfigureAwait(false);
+
+                        if (!String.IsNullOrEmpty(result))
                         {
-                            await additionalCommand(stream, cancellationToken).ConfigureAwait(false);
-                        }
-
-                        using (var reader = new StreamReader(stream))
-                        {
-                            result = await reader.ReadToEndAsync().ConfigureAwait(false);
-
-                            if (!String.IsNullOrEmpty(result))
-                            {
-                                //if we have a result, trim off the terminating null character
-                                result = result.TrimEnd('\0');
-                            }
+                            //if we have a result, trim off the terminating null character
+                            result = result.TrimEnd('\0');
                         }
                     }
                 }
