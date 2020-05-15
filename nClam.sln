@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.3
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nClam", "nClam\nClam.csproj", "{4F90429F-3CB1-4972-AEC1-3A06FA8841D1}"
 EndProject
@@ -9,9 +9,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nClam.ConsoleTest45", "nCla
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nClam.ConsoleTestC2", "nClam.ConsoleTestC2\nClam.ConsoleTestC2.csproj", "{82DFC22E-F7F9-4EB0-BFE2-62E19CA4D78A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nClam.Tests", "nClam.Tests\nClam.Tests.csproj", "{977109DD-3C54-495F-A6D3-B94BB667728D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nClam.Tests", "nClam.Tests\nClam.Tests.csproj", "{977109DD-3C54-495F-A6D3-B94BB667728D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console Examples", "Console Examples", "{600E1A67-6A2F-408B-B436-4AA8480A4EBA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{444BCA25-4BAD-4D52-89E9-1D00928E9F8A}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
